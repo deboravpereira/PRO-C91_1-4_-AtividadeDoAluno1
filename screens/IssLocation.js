@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import MapView, { Marker } from 'react-native-maps';
 import axios from "axios";
-import IssInfo from "./IssInfo";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default class IssLocationScreen extends Component {
@@ -27,6 +27,11 @@ export default class IssLocationScreen extends Component {
 
     componentDidMount() {
         this.getIssLocation()
+        try{
+            setInterval(() => this.getIssLocation(), 5000);
+        }catch(e){
+            console.log(e)
+        }
     }
 
     getIssLocation = () => {
@@ -49,7 +54,7 @@ export default class IssLocationScreen extends Component {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                    <Text>Carregando</Text>
+                    <Text>Carregando...</Text>
                 </View>
             )
         } else {
@@ -84,7 +89,13 @@ export default class IssLocationScreen extends Component {
                                 </Marker>
                             </MapView>
                         </View>
-                        <IssInfo />
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.infoText}>Latitude: {this.state.location.latitude}</Text>
+                            <Text style={styles.infoText}>Longitude: {this.state.location.longitude}</Text>
+                            <Text style={styles.infoText}>Altitude (KM): {this.state.location.altitude}</Text>
+                            <Text style={styles.infoText}>Valocidade (KM/H): {this.state.location.velocity}</Text>
+                        </View>
+                       
                     </ImageBackground>
                 </View>
             );
@@ -119,10 +130,23 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     mapContainer: {
-        flex: 0.6
+        flex: 0.7
     },
     map: {
         width: "100%",
         height: "100%"
+    },
+    infoContainer: {
+        flex: 0.2,
+        backgroundColor: 'white',
+        marginTop: -10,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        padding: 30
+    },
+    infoText: {
+        fontSize: 15,
+        color: "black",
+        fontWeight: "bold"
     }
 });
