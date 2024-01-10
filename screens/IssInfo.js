@@ -7,16 +7,16 @@ import {
 } from "react-native";
 import axios from "axios";
 
-export default class IssLocationScreen extends Component {
+export default class IssInfoScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             location: {}
         };
     }
-}
 
-render() {
+
+render(){
     if (Object.keys(this.state.location).length === 0) {
         return (
             <View
@@ -30,7 +30,9 @@ render() {
         )
     } else {
         return (
-            
+            <View>
+
+            </View>
         );
     }
 }
